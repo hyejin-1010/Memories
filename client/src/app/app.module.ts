@@ -1,16 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SignInComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
