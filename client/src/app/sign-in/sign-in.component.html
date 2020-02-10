@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="id">
+    <input type="text" [(ngModel)]="account.uid" />
+  </div>
+  <div class="pw">
+    <input type="password" [(ngModel)]="account.password" />
+  </div>
+
+  <div class="buttons">
+    <button class="login_btn" (click)="login()">login</button>
+  </div>
+
+  <div class="go_to_signup">
+    <button class="to_go_signup" (click)="register()">회원가입</button>
+  </div>
+</div>

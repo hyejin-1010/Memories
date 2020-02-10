@@ -18,9 +18,17 @@ mongoose.connect('mongodb://localhost/memories'); // mongodb_tutorial : Database
 // define model
 var User = require('./models/user');
 
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+}
+
 // [CONFIGURE APP TO USE bodyParser]
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(allowCrossDomain);
 
 // [CONFIGURE SAVER PORT]
 var port = process.env.PORT || 8080;

@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="inputs">
+
+    <div class="uid">
+      <label>ID</label>
+      <input type="text" [(ngModel)]="account.uid" />
+    </div>
+    <div class="password">
+      <label>PW</label>
+      <input type="password" [(ngModel)]="account.password" />
+    </div>
+    <div class="password_confirm">
+      <label>PW_Confirm</label>
+      <input type="password" />
+    </div>
+    <div class="email">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="account.email" />
+    </div>
+    <div class="name">
+      <label>성</label>
+      <input type="text" [(ngModel)]="account.last" />
+
+      <label>이름</label>
+      <input type="text" [(ngModel)]="account.first" />
+    </div>
+
+    <div class="nickname">
+      <label>닉네임</label>
+      <input type="text" [(ngModel)]="account.nickname" />
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button (click)="signup()">회원가입</button>
+  </div>
+</div>
