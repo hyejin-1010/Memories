@@ -1,0 +1,32 @@
+@import "mixin";
+
+$navbar-height: 80px;
+
+.navbar {
+  display: flex;
+  padding: 0 15px;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: space-between;
+  height: $navbar-height;
+  background-color: $primary;
+  border-bottom: 1px solid rgba($black, .4);
+
+  .left-info {
+    display: flex;
+    align-items: center;
+    .logo {
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: $white;
+        .title {
+          font-size: 22px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
