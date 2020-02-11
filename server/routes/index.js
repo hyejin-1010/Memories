@@ -1,5 +1,4 @@
 module.exports = function(app, User) {
-
   // 회원 가입 (signup)
   app.post('/api/signup', function (req, res) {
     var user = new User();
@@ -19,6 +18,15 @@ module.exports = function(app, User) {
             console.err(err);
             res.json({ success: false });
         } else { res.json({ success: true }); }
+    });
+  });
+
+  // 아이디 중복 체크
+  app.get('/api/idcheck/:uid', function (req, res) {
+    User.find({ uid: req.params.uid }, function (err, users) {
+      if (err) { res.status(500).json({error: err}); }
+      else if (users.length) { res.json({success: true}); }
+      else { res.json({success: false }); }
     });
   });
 
