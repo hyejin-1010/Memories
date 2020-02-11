@@ -34,7 +34,7 @@ export class SignInComponent implements OnInit {
 
     this.auth.signIn(this.id, this.pw).subscribe((success) => {
       if (success) {  // 로그인 성공
-        // 메인 페이지로 이동
+        this.router.navigate(['/']);
       } else {  // 로그인 실패
         alert('아이디 혹은 비밀번호를 다시 한 번 확인해주세요.');
       }
