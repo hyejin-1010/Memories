@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { AuthService } from './auth.service';
 // import { AuthService } from './auth.service';
 // import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor() {
+  constructor(
+    private auth: AuthService,
+  ) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Get the auth token from the service.
-    // const authToken = this.auth.token || localStorage.getItem('token') || this.cookie.get('token');
-    const authToken = localStorage.getItem('token');
+    const authToken = this.auth.token || localStorage.getItem('token');
 
     // if authToken is null, there is an error
     // TypeError: undefined is not an object (evaluating 'value.length'): http.js 308
