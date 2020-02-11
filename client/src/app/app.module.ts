@@ -10,6 +10,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainComponent } from './main/main.component';
 import { AuthInterceptor } from './services/auth-interceptor';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
     SignUpComponent,
     NavbarComponent,
     MainComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,43 @@
+@import "mixin";
+
+$sidenav-width: 240px;
+$navbar-height: 80px;
+
+.sidenav {
+  width: $sidenav-width;
+  border-right: 1px solid $primary;
+
+  &.show {
+    transform: translateX(0);
+  }
+
+  &.hide {
+    transform: translateX(-$sidenav-width);
+  }
+}
+
+.nav-list {
+  position: relative;
+  height: calc(100vh - #{$navbar-height} - 50px); // app height - navbar - project info area - team btn
+  max-height: calc(100vh - #{$navbar-height} - 50px); // app height - navbar - project info area - team btn
+  overflow-y: auto;
+}
+
+.add-team {
+  display: flex;
+  align-items: center;
+  color: $white;
+  font-weight: 700;
+  background: $primary;
+  height: 50px;
+  padding: 0 16px;
+  cursor: pointer;
+
+  o2-icon {
+    font-size: 24px;
+  }
+
+  span {
+    padding-left: 12px;
+  }
+}
