@@ -1,0 +1,44 @@
+@import '../sign-in/sign-in.component.scss';
+
+.wrapper {
+  .container {
+    .input-item {
+      position: relative;
+      input {
+        height: 40px;
+      }
+      .right-item {
+        position: absolute;
+        right: 0;
+        bottom: 25px;
+
+        .check_uid {
+          color: $primary;
+          font-size: 13px;
+          background: transparent;
+          border: 0px solid $black;
+        }
+        .check_mark {
+          color: $primary;
+          font-size: 20px;
+        }
+      }
+    }
+
+    .btn-container {
+      text-align: center;
+      button {
+        &.signUp {
+          background: $primary;
+          color: $white;
+        }
+        &.goToLogin {
+          width: auto;
+          height: auto;
+          color: $primary;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
