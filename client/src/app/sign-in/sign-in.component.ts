@@ -8,10 +8,8 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
-  account = {
-    uid: '',
-    password: ''
-  };
+  id: string;
+  pw: string;
 
   constructor(
     private router: Router,
@@ -24,15 +22,15 @@ export class SignInComponent implements OnInit {
   login() {
     let message: string = null;
 
-    if (!this.account.uid) {
+    if (!this.id) {
       message = '아이디를 입력하주세요.';
-    } else if (!this.account.password) {
+    } else if (!this.pw) {
       message = '비밀번호를 입력해주세요.';
     }
 
     if (message) { return alert(message); }
 
-    this.api.post('signin', this.account).subscribe(resp => {
+    this.api.post('signin', { uid: this.id, password: this.pw }).subscribe(resp => {
       if (resp.success) { // 로그인 성공
         // 메인 페이지로 이동
       } else { // 로그인 실패
@@ -41,7 +39,7 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  register() {
+  signIn() {
     this.router.navigate(['/signup']);
   }
 }

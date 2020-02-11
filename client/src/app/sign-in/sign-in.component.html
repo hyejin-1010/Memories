@@ -1,16 +1,25 @@
-<div class="container">
-  <div class="id">
-    <input type="text" [(ngModel)]="account.uid" />
-  </div>
-  <div class="pw">
-    <input type="password" [(ngModel)]="account.password" />
-  </div>
+<div class="wrapper">
+  <section class="container">
+    <form action="">
+      <fieldset>
+        <legend class="title">로그인</legend>
 
-  <div class="buttons">
-    <button class="login_btn" (click)="login()">login</button>
-  </div>
+        <!-- <p class="error" *ngIf="showErrorMsg">{{ 'INVALID_ACCOUNT_OR_PW' | translate }}</p> -->
 
-  <div class="go_to_signup">
-    <button class="to_go_signup" (click)="register()">회원가입</button>
-  </div>
+        <p class="input-item">
+          <label for="id">아이디</label>
+          <input id="id" type="text" [(ngModel)]="id" class="id" [ngModelOptions]="{standalone: true}">
+        </p>
+        <p class="input-item">
+          <label for="password">비밀번호</label>
+          <input id="password" type="password" [(ngModel)]="pw" class="password" [ngModelOptions]="{standalone: true}">
+        </p>
+
+        <div class="btn-container">
+          <button (click)="login()" class="login">로그인</button>
+          <button (click)="signIn()" class="signIn">회원가입</button>
+        </div>
+      </fieldset>
+    </form>
+  </section>
 </div>

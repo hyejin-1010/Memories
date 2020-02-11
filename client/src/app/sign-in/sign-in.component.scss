@@ -1,0 +1,95 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+// 임시 컬러
+$orangey_red: #ff453a;
+$black: #000;
+$greyish: #a7a7a7;
+$primary: #F78181;
+$white: #fff;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .container {
+    width: 600px;
+
+    fieldset {
+      margin: 0;
+      padding: 0;
+      border: 0px solid $black;
+    }
+    .title {
+      padding-bottom: 32px;
+      text-align: center;
+      color: $primary;
+      line-height: 64px;
+      font-size: 40px;
+      font-weight: 700;
+    }
+
+    .error {
+      color: $orangey_red;
+      margin-bottom: 32px;
+    }
+
+    .input-item {
+      width: 100%;
+      padding-bottom: 10px;
+      color: $black;
+
+      label {
+        width: 100%;
+        height: 24px;
+        font-size: 16px;
+        color: $greyish;
+      }
+
+      input {
+        overflow: hidden;
+        width: 100%;
+        height: 50px;
+        border: 0;
+        background-color: transparent;
+        border-bottom: 1px solid rgba($color: $greyish, $alpha: 0.65);
+        color: $black;
+        font-size: 17px;
+      }
+    }
+
+    .btn-container {
+      margin-top: 24px;
+
+      button {
+        width: 100%;
+        height: 44px;
+        border: 0;
+        border-radius: 8px;
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        cursor: pointer;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &.login {
+          background: $primary;
+          color: $white;
+        }
+
+        &.signIn {
+          border: 1px solid $primary;
+          color: $primary;
+        }
+      }
+    }
+  }
+}
