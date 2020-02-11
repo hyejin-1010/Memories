@@ -1,3 +1,6 @@
+let jwt = require("jsonwebtoken");
+let secretObj = require("../config/jwt");
+
 module.exports = function(app, User) {
   // 회원 가입 (signup)
   app.post('/api/signup', function (req, res) {
@@ -32,6 +35,15 @@ module.exports = function(app, User) {
 
   // 로그인
   app.post('/api/signin', function (req, res) {
+    // default : HMAC SHA256
+    let token = jwt.sign({
+      uid: req.body.uid,
+    },
+    secretObj.secret ,    // 비밀 키
+    {
+      expiresIn: '5m'    // 유효 시간은 5분
+    });
+
     User.find({uid: req.body.uid, password: req.body.password}, function(err, users) {
       if (err) { return res.status(500).json({error: err}); }
       if (users.length === 0) {
@@ -41,9 +53,12 @@ module.exports = function(app, User) {
         });
       }
 
+      const user = users[0];
+      user.token = token;
+
       res.json({
         success: true,
-        data: users[0]
+        data: user,
       });
     });
   })
