@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,6 +15,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private router: Router,
     private api: ApiService,
+    private auth: AuthService,
   ) { }
 
   ngOnInit() {
@@ -30,10 +32,10 @@ export class SignInComponent implements OnInit {
 
     if (message) { return alert(message); }
 
-    this.api.post('signin', { uid: this.id, password: this.pw }).subscribe(resp => {
-      if (resp.success) { // 로그인 성공
+    this.auth.signIn(this.id, this.pw).subscribe((success) => {
+      if (success) {  // 로그인 성공
         // 메인 페이지로 이동
-      } else { // 로그인 실패
+      } else {  // 로그인 실패
         alert('아이디 혹은 비밀번호를 다시 한 번 확인해주세요.');
       }
     });
