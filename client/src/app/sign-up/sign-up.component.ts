@@ -44,11 +44,13 @@ export class SignUpComponent implements OnInit {
       }
 
       this.validUID = !resp.success;
+      this.checkDone();
     });
   }
 
   changeUID() {
     this.validUID = false;
+    this.checkDone();
   }
 
   changePW(confirm: boolean = false) {
@@ -61,10 +63,13 @@ export class SignUpComponent implements OnInit {
     } else if (!confirm) {
       this.validPW = false;
     }
+
+    this.checkDone();
   }
 
   changeEmail() {
     this.validEmail = this.isValidateEmail(this.email);
+    this.checkDone();
   }
 
   isValidateEmail(email): boolean {

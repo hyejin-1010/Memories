@@ -34,28 +34,28 @@
         </div>
         <div class="input-item">
           <label for="last">성</label>
-          <input id="last" type="text" [(ngModel)]="last" [ngModelOptions]="{standalone: true}" />
+          <input id="last" type="text" [(ngModel)]="last" (ngModelChange)="checkDone()" [ngModelOptions]="{standalone: true}" />
           <div class="right-item">
             <span *ngIf="last" class="check_mark">✓</span>
           </div>
         </div>
         <div class="input-item">
           <label for="first">이름</label>
-          <input id="first" type="text" [(ngModel)]="first" [ngModelOptions]="{standalone: true}" />
+          <input id="first" type="text" [(ngModel)]="first" (ngModelChange)="checkDone()" [ngModelOptions]="{standalone: true}" />
           <div class="right-item">
             <span *ngIf="first" class="check_mark">✓</span>
           </div>
         </div>
         <div class="input-item">
           <label for="nickname">닉네임</label>
-          <input id="nickname" type="text" [(ngModel)]="nickname" [ngModelOptions]="{standalone: true}" />
+          <input id="nickname" type="text" [(ngModel)]="nickname" (ngModelChange)="checkDone()" [ngModelOptions]="{standalone: true}" />
           <div class="right-item">
             <span *ngIf="nickname" class="check_mark">✓</span>
           </div>
         </div>
 
         <div class="btn-container">
-          <button class="signUp" (click)="done()" [disabled]="!isDone">회원가입</button>
+          <button class="signUp" (click)="done()" [ngStyle]="{opacity: isDone ? '1' : '0.4'}" [disabled]="!isDone">회원가입</button>
           <button class="goToLogin" (click)="goToLogin()">로그인하기</button>
         </div>
       </fieldset>
