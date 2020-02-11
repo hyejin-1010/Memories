@@ -25,12 +25,23 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              {
+								"glob": "**/*",
+								"input": "src/assets/",
+								"output": "/assets/"
+							}
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+							"src/app/styles/style.scss"
             ],
-            "scripts": []
+						"stylePreprocessorOptions": {
+							"includePaths": [
+								"src/app/styles"
+							]
+						},
+            "scripts": [],
+						"es5BrowserSupport": false
           },
           "configurations": {
             "production": {

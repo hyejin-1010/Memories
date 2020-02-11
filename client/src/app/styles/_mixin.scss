@@ -1,0 +1,17 @@
+@import "color";
+
+//	라인이 제한 된 text style
+@mixin text-height($type: "auto", $height, $font-size: 14px, $font-weight: 400) {
+  min-height: 0;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $height;
+  white-space: pre-wrap;
+
+  // fix가 아니면 전부 auto로 처리
+  @if ($type == "fix") {
+    max-height: $height;
+    overflow: hidden;
+    white-space: normal;
+  }
+}
