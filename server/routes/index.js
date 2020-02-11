@@ -53,7 +53,7 @@ module.exports = function(app, User) {
         });
       }
 
-      const user = users[0];
+      const user = JSON.parse(JSON.stringify(users[0]));
       user.token = token;
 
       res.json({
@@ -61,5 +61,28 @@ module.exports = function(app, User) {
         data: user,
       });
     });
-  })
+  });
+
+  // 자기 자신 정보 get
+  app.get('/api/account/me', function (req, res) {
+    const token = req.headers['x-access-token'];
+    let decoded = jwt.decode(token);
+    if (decoded && decoded.uid) {
+      const uid = decoded.uid;
+      User.find({ uid }, function (err, users) {
+        if (err) { return res.status(500).json({error: err}); }
+        if (users.length === 0) {
+          return res.status(404).json({
+            success: false,
+            message: 'not found user'
+          });
+        }
+
+        res.json({
+          success: true,
+          data: users[0]
+        });
+      });
+    } else{ res.json({success: false}); }
+  });
 }
