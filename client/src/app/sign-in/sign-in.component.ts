@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -11,14 +10,23 @@ import { AuthService } from '../services/auth.service';
 export class SignInComponent implements OnInit {
   id: string;
   pw: string;
+  autoLogin = false; // 지동 로그인 여부
 
   constructor(
     private router: Router,
-    private api: ApiService,
     private auth: AuthService,
   ) { }
 
   ngOnInit() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.auth.getMe().subscribe((success: boolean) => {
+        if (success) {
+          this.router.navigate(['/']);
+        }
+      });
+    }
   }
 
   login() {
@@ -32,7 +40,7 @@ export class SignInComponent implements OnInit {
 
     if (message) { return alert(message); }
 
-    this.auth.signIn(this.id, this.pw).subscribe((success) => {
+    this.auth.signIn(this.id, this.pw, this.autoLogin).subscribe((success) => {
       if (success) {  // 로그인 성공
         this.router.navigate(['/']);
       } else {  // 로그인 실패

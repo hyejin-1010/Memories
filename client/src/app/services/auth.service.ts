@@ -10,20 +10,36 @@ import { StoreService } from './store.service';
 export class AuthService {
   isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
+  token: string;
+
   constructor(
     private api: ApiService,
     private store: StoreService,
   ) { }
 
-  signIn(uid: string, password: string): Observable<boolean> {
+  signIn(uid: string, password: string, auto: boolean = false): Observable<boolean> {
     return this.api.post('signin', { uid, password }).pipe(
       map((resp) => {
         if (resp.success) {
-          this.store.me = resp.data;
+          const user = resp.data;
+          this.store.me = user;
+          this.token = user.token;
+          if (auto) {
+            localStorage.setItem('token', user.token);
+          }
           this.isLoggedIn$.next(true);
         }
         return resp.success;
       })
     );
+  }
+
+  getMe(): Observable<boolean> {
+    return this.api.get(`account/me`).pipe(map(resp => {
+      this.store.me = resp.data;
+      this.token = localStorage.getItem('token');
+      this.isLoggedIn$.next(true);
+      return resp.success;
+    }));
   }
 }
