@@ -6,20 +6,20 @@ module.exports = function(app, User) {
   app.post('/api/signup', function (req, res) {
     var user = new User();
 
-    user.uid = req.body.uid;
+    required_field = ['uid', 'email', 'password', 'first', 'last', 'nickname'];
+    for (const field of required_field) {
+      if (!req.body[field]) {
+        res.json({ success: false });
+        return;
+      }
+      user[field] = req.body[field];
+    }
     user.avatar = req.body.avatar;
-    user.email = req.body.email;
-    user.password = req.body.password;
-    user.first = req.body.first;
-    user.last = req.body.last;
-    user.nickname = req.body.nickname;
-
-    // 모든 필드 required 안 들어가게 체크하는 거 필요
-
+    user.created = new Date().toString();
     user.save(function (err) {
         if (err) {
             console.err(err);
-            res.json({ success: false });
+            res.status(500).json({ success: false });
         } else { res.json({ success: true }); }
     });
   });
