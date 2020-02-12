@@ -16,11 +16,13 @@ export class StoreService {
   me: any;
   clubs: ClubModel[];
   clubs$ = new BehaviorSubject<ClubModel[]>([]);      // navbar에서 선택된 global group subject
+  currentClub: ClubModel;
 
   constructor() { }
 
   initialize() {
     this.me = undefined;
     this.clubs = [];
+    this.currentClub = undefined;
   }
 }

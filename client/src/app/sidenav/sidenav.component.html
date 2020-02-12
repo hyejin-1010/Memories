@@ -1,6 +1,10 @@
 <div class="sidenav">
   <div class="nav-list">
-    <div *ngFor="let club of clubs" class="club-item">
+    <div *ngFor="let club of clubs"
+      [routerLinkActive]="'active'"
+      routerLink="{{club._id}}/schedule"
+      (click)="clickClub(club)"
+      class="club-item">
       {{club.title}}
     </div>
   </div>

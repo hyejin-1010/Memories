@@ -38,4 +38,11 @@ export class SidenavComponent implements OnInit {
       this.club.create(title).subscribe();
     });
   }
+
+  // 사이드 메뉴의 모임을 클릭했을 경우
+  clickClub(club: ClubModel) {
+    if (!club || !club._id) { return; }
+    if (this.store.currentClub && this.store.currentClub._id === club._id) { return; }
+    this.store.currentClub = club;
+  }
 }
