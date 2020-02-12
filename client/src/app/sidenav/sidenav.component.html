@@ -1,6 +1,8 @@
 <div class="sidenav">
   <div class="nav-list">
-
+    <div *ngFor="let club of clubs" class="club-item">
+      {{club.title}}
+    </div>
   </div>
   <div class="add-team" (click)="addClub()">
     <span>모임 추가</span>

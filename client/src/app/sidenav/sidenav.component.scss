@@ -18,6 +18,13 @@
   height: calc(100vh - #{$navbar-height} - 50px);
   max-height: calc(100vh - #{$navbar-height} - 50px);
   overflow-y: auto;
+
+  .club-item {
+    height: 50px;
+    padding: 0 5px;
+    @include text-height("auto", 50px, 13px, 500);
+    border-bottom: 1px solid $primary;
+  }
 }
 
 .add-team {

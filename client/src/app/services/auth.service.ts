@@ -3,6 +3,7 @@ import { ApiService } from './api.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StoreService } from './store.service';
+import { ClubService } from './club.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class AuthService {
   constructor(
     private api: ApiService,
     private store: StoreService,
+    private club: ClubService,
   ) { }
 
   signIn(uid: string, password: string, auto: boolean = false): Observable<boolean> {
@@ -28,6 +30,7 @@ export class AuthService {
             localStorage.setItem('token', user.token);
           }
           this.isLoggedIn$.next(true);
+          this.getClubs();
         }
         return resp.success;
       })
@@ -36,10 +39,17 @@ export class AuthService {
 
   getMe(): Observable<boolean> {
     return this.api.get(`account/me`).pipe(map(resp => {
-      this.store.me = resp.data;
-      this.token = localStorage.getItem('token');
-      this.isLoggedIn$.next(true);
+      if (resp.success) {
+        this.store.me = resp.data;
+        this.token = localStorage.getItem('token');
+        this.isLoggedIn$.next(true);
+        this.getClubs();
+      }
       return resp.success;
     }));
+  }
+
+  getClubs() {
+    this.club.lists().subscribe();
   }
 }
