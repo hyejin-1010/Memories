@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isLoggedIn$.getValue()) { return true; }
 
     // 로그인이 안되어 있으므로 로그인 페이지로 이동
-    this.router.navigate(['/signin']);
+    this.router.navigate(['/signin'], {queryParams: {redirectTo: state.url || '/'}});
     return false;
   }
 }

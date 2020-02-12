@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -12,10 +12,15 @@ export class SignInComponent implements OnInit {
   pw: string;
   autoLogin = false; // 지동 로그인 여부
 
+  redirectTo: string; // 로그인 안 한 사용자가 입력한 url
+
   constructor(
     private router: Router,
     private auth: AuthService,
-  ) { }
+    private route: ActivatedRoute,
+  ) {
+    this.redirectTo = this.route.snapshot.queryParams.redirectTo;
+  }
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -23,7 +28,7 @@ export class SignInComponent implements OnInit {
     if (token) {
       this.auth.getMe().subscribe((success: boolean) => {
         if (success) {
-          this.router.navigate(['/']);
+          this.router.navigate([''], {queryParams: {redirectTo: this.redirectTo}});
         }
       });
     }
@@ -42,7 +47,7 @@ export class SignInComponent implements OnInit {
 
     this.auth.signIn(this.id, this.pw, this.autoLogin).subscribe((success) => {
       if (success) {  // 로그인 성공
-        this.router.navigate(['/']);
+        this.router.navigate([''], {queryParams: {redirectTo: this.redirectTo}});
       } else {  // 로그인 실패
         alert('아이디 혹은 비밀번호를 다시 한 번 확인해주세요.');
       }
