@@ -17,6 +17,7 @@ mongoose.connect('mongodb://localhost/memories'); // mongodb_tutorial : Database
 
 // define model
 var User = require('./models/user');
+var Club = require('./models/club');
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");
@@ -35,6 +36,7 @@ var port = process.env.PORT || 8080;
 
 // [CONFIGURE ROUTER]
 var router = require('./routes')(app, User);
+var clubRouter = require('./routes/club')(app, Club);
 
 // [RUN SERVER]
 var server = app.listen(port, function() {
