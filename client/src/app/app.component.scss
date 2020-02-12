@@ -1,21 +1,12 @@
-// @import "mixin";
-
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  z-index: 100000; // 무조건 최상단으로
-  width: 100%;
-}
+@import "mixin";
 
 .app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  // background: #000;
-  // color: #fff;
 }
 
-.sidemenu {
+.sideMenu {
   display: flex;
 }
 
@@ -29,12 +20,4 @@
     display: flex;
     flex: 1;
   }
-}
-
-//// reset ////
-
-button {
-  border: 0;
-  background: transparent;
-  color: #fff;
 }
