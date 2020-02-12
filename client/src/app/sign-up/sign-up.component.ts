@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -23,12 +24,10 @@ export class SignUpComponent implements OnInit {
 
   isDone = false;
 
-  // tslint:disable-next-line:max-line-length
-  private EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
   constructor(
     private api: ApiService,
     private router: Router,
+    private common: CommonService,
   ) { }
 
   ngOnInit() {
@@ -68,13 +67,8 @@ export class SignUpComponent implements OnInit {
   }
 
   changeEmail() {
-    this.validEmail = this.isValidateEmail(this.email);
+    this.validEmail = this.common.isValidateEmail(this.email);
     this.checkDone();
-  }
-
-  isValidateEmail(email): boolean {
-    if (!email) { return false; }
-    return this.EMAIL_REGEX.test(email);
   }
 
   checkDone() {
