@@ -1,0 +1,16 @@
+@import "color";
+
+// custom dialog popup
+.no-padding-dialog {
+  .mat-dialog-container {
+    padding: 0;
+    border-radius: 8px;
+  }
+}
+
+// 팝업 오버레이 컬러
+.cdk-overlay-container {
+  .cdk-overlay-dark-backdrop {
+    background-color: rgba($color: $dark_grey, $alpha: 0.6);
+  }
+}

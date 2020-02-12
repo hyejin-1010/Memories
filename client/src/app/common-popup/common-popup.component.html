@@ -1,0 +1,18 @@
+<div class="common-popup-container">
+  <div class="title" [ngClass]="{'only-title': titleOnly}">{{title}}</div>
+  <div *ngIf="!titleOnly" class="desc">
+    <div [innerHTML]="contents"></div>
+  </div>
+
+  <div *ngIf="input" class="input-wrapper">
+    <input type="text"
+           [(ngModel)]="inputText"
+           [placeholder]="placeholder"
+           [maxlength]="maxLength"
+           (keypress)="done($event)">
+  </div>
+  <div class="footer-btn">
+    <button *ngIf="type === 'confirm'" (click)="cancel()" class="cancel">취소</button>
+    <button (click)="done()" class="done">확인</button>
+  </div>
+</div>

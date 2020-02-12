@@ -1,0 +1,59 @@
+@import "mixin";
+
+.common-popup-container {
+  text-align: center;
+
+  .title {
+    padding: 16px 16px 0;
+    @include text-height('auto', 24px, 17px, 700);
+    color: $primary;
+
+    &.only-title {
+      padding: 0;
+      height: 82px;
+      line-height: 82px;
+    }
+  }
+
+  .desc {
+    div {
+      margin: 8px 16px 16px;
+      @include text-height('auto', 18px, 13px);
+    }
+  }
+
+  .input-wrapper {
+    padding-bottom: 16px;
+
+    input {
+      overflow: hidden;
+      width: calc(100% - 32px);
+      padding: 0 8px;
+      border-radius: 4px;
+      border: 1px solid $primary;
+      @include text-height('auto', 25px, 13px);
+    }
+  }
+
+  .footer-btn {
+    display: flex;
+    justify-content: space-around;
+    height: 46px;
+    border-top: 1px solid rgba($color: $primary, $alpha: 0.65);
+
+    button {
+      width: 100%;
+      border: 0;
+      @include text-height('auto', 44px, 17px, 500);
+      cursor: pointer;
+
+      &.cancel {
+        color: $orangey_red;
+      }
+      &.done {
+        border-left: 1px solid rgba($color: $primary, $alpha: 0.65);
+        color: $dodger_blue;
+      }
+    }
+  }
+}
