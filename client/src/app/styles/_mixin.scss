@@ -1,4 +1,5 @@
 @import "color";
+@import "variable";
 
 //	라인이 제한 된 text style
 @mixin text-height($type: "auto", $height, $font-size: 14px, $font-weight: 400) {

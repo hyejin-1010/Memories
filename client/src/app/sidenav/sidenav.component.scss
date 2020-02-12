@@ -1,8 +1,5 @@
 @import "mixin";
 
-$sidenav-width: 240px;
-$navbar-height: 80px;
-
 .sidenav {
   width: $sidenav-width;
   border-right: 1px solid $primary;
@@ -18,8 +15,8 @@ $navbar-height: 80px;
 
 .nav-list {
   position: relative;
-  height: calc(100vh - #{$navbar-height} - 50px); // app height - navbar - project info area - team btn
-  max-height: calc(100vh - #{$navbar-height} - 50px); // app height - navbar - project info area - team btn
+  height: calc(100vh - #{$navbar-height} - 50px);
+  max-height: calc(100vh - #{$navbar-height} - 50px);
   overflow-y: auto;
 }
 
