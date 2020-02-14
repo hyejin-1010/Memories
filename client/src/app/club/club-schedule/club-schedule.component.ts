@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarEvent, CalendarEventAction, CalendarView, CalendarEventTimesChangedEvent } from 'angular-calendar';
 import {
   startOfDay,
-  endOfDay,
   subDays,
   addDays,
   endOfMonth,
@@ -11,20 +10,12 @@ import {
   addHours
 } from 'date-fns';
 import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ScheduleDialogComponent } from 'src/app/schedule-dialog/schedule-dialog.component';
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
+const primaryColor = {
+  primary: '#F78181',
+  secondary: '#F78181'
 };
 
 @Component({
@@ -67,7 +58,7 @@ export class ClubScheduleComponent implements OnInit {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
       title: 'A 3 day event',
-      color: colors.red,
+      color: primaryColor,
       actions: this.actions,
       allDay: true,
       resizable: {
@@ -79,21 +70,21 @@ export class ClubScheduleComponent implements OnInit {
     {
       start: startOfDay(new Date()),
       title: 'An event with no end date',
-      color: colors.yellow,
+      color: primaryColor,
       actions: this.actions
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
       title: 'A long event that spans 2 months',
-      color: colors.blue,
+      color: primaryColor,
       allDay: true
     },
     {
       start: addHours(startOfDay(new Date()), 2),
       end: addHours(new Date(), 2),
       title: 'A draggable and resizable event',
-      color: colors.yellow,
+      color: primaryColor,
       actions: this.actions,
       resizable: {
         beforeStart: true,
@@ -103,7 +94,9 @@ export class ClubScheduleComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
 
@@ -156,5 +149,14 @@ export class ClubScheduleComponent implements OnInit {
       return iEvent;
     });
     this.handleEvent('Dropped or resized', event);
+  }
+
+  addSchedule() {
+    this.dialog.open(ScheduleDialogComponent, {
+      width: '450px',
+      minHeight: '450px',
+      height: '450px',
+      panelClass: ['no-padding-dialog'],
+    });
   }
 }

@@ -31,6 +31,7 @@ $client-theme: mat-light-theme($client-primary, $client-accent, $client-warn);
 @import url("//fonts.googleapis.com/earlyaccess/notosanskr.css");
 
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 * {
   font-family: "Noto Sans KR", sans-serif;

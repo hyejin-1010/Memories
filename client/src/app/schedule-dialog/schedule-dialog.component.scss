@@ -1,0 +1,62 @@
+@import "mixin";
+
+.dialog-header {
+  height: 70px;
+  @include text-height("auto", 70px, 24px, 700);
+  text-align: center;
+  color: $primary;
+}
+
+.dialog-contents {
+  height: calc(100% - 70px - 40px);
+
+  .title {
+    margin-bottom: 20px;
+    input {
+      overflow: hidden;
+      width: calc(100% - 70px);
+      height: 40px;
+      margin: 0 25px;
+      padding: 0 8px;
+      border: 0px solid $black;
+      @include text-height('auto', 40px, 17px, 700);
+    }
+  }
+
+  .item {
+    padding: 0 25px;
+    div.left {
+      display: inline-block;
+      width: 50px;
+      color: $primary;
+      @include text-height('auto', 50px, 15px, 600);
+    }
+    div.right {
+      display: inline-block;
+      input.date {
+        font-size: 13px;
+        border: 0px solid $black;
+        border-bottom: 1px solid $greyish;
+      }
+    }
+  }
+}
+
+.footer {
+  height: 40px;
+  border-top: 1px solid $primary;
+  button.footer-btn {
+    width: 50%;
+    height: 40px;
+    @include text-height('auto', 40px, 13px, 700);
+    border: 0px solid $black;
+    background: transparent;
+    &.cancel {
+      color: $orangey_red;
+      border-right: 1px solid $primary;
+    }
+    &.done {
+      color: $dodger_blue;
+    }
+  }
+}

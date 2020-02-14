@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { AppComponent } from './app.component';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -18,6 +19,8 @@ import { CommonPopupComponent } from './common-popup/common-popup.component';
 import { ClubScheduleComponent } from './club/club-schedule/club-schedule.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { ScheduleDialogComponent } from './schedule-dialog/schedule-dialog.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     SidenavComponent,
     CommonPopupComponent,
     ClubScheduleComponent,
+    ScheduleDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,9 +42,12 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     BrowserAnimationsModule,
     MatDialogModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   entryComponents: [
     CommonPopupComponent,
+    ScheduleDialogComponent,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

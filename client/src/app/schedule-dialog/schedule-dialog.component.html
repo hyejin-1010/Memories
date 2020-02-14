@@ -1,0 +1,44 @@
+<div class="dialog-header">
+  일정 생성
+</div>
+
+<div class="dialog-contents">
+  <div class="title">
+    <input type="text" [(ngModel)]="title" placeholder="타이틀을 입력해주세요." />
+  </div>
+
+  <div class="item">
+    <div class="left">
+      <span class="label">시작</span>
+    </div>
+    <div class="right">
+      <input [(ngModel)]="start"
+        class="date"
+        [owlDateTime]="startDateTime"
+        [owlDateTimeTrigger]="startDateTime"
+        placeholder="Start Time">
+      <owl-date-time #startDateTime [stepMinute]="5"></owl-date-time>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="left">
+      <span class="label">종료</span>
+    </div>
+    <div class="right">
+      <input [(ngModel)]="end"
+        class="date"
+        [owlDateTime]="endDateTime"
+        [owlDateTimeTrigger]="endDateTime"
+        placeholder="Start Time">
+      <owl-date-time #endDateTime [stepMinute]="5"></owl-date-time>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="buttons">
+    <button class="footer-btn cancel" (click)="cancel()" tappable>취소</button>
+    <button class="footer-btn done" (click)="done()" [disabled]="!(title && start && end)">완료</button>
+  </div>
+</div>
