@@ -1,1 +1,15 @@
-<p>main works!</p>
+<div class="club-container">
+  <div class="tabs">
+    <div class="tab" (click)="changeTab('schedule')">Schedule</div>
+    <div class="tab" (click)="changeTab('gallery')">Gallery</div>
+  </div>
+
+  <ng-container [ngSwitch]="routeParams?.type">
+    <ng-container *ngSwitchCase="'schedule'">
+      <app-club-schedule></app-club-schedule>
+    </ng-container>
+    <ng-container *ngSwitchCase="'gallery'">
+      Gallery
+    </ng-container>
+  </ng-container>
+</div>

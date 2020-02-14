@@ -1,15 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { StoreService, ClubModel } from '../services/store.service';
+import { Subscription } from 'rxjs';
+import { Router, RouterEvent, NavigationStart, NavigationEnd, Params, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
+  ready = false;
+  routeParams: Params;
+  club: ClubModel;
 
-  constructor() { }
+  private routerSubscription: Subscription;
+
+  constructor(
+    private store: StoreService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
+    this.routerSubscription = this.router.events.subscribe((event: RouterEvent) => {
+      if (event instanceof NavigationStart) {
+        this.ready = false;
+        // this.aside.close();
+      } else if (event instanceof NavigationEnd) {
+        this.routeParams = this.route.snapshot.params;
+        this.club = this.store.currentClub;
+      }
+    });
+  }
 
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    if (this.routerSubscription) { this.routerSubscription.unsubscribe(); }
+  }
+
+  changeTab(tab: 'schedule' | 'gallery') {
+    this.router.navigate([this.club._id, tab]);
+  }
 }
