@@ -1,0 +1,41 @@
+<div class="schedule-container">
+  <div class="calendar">
+    <div class="calendar-header">
+      <button
+        mwlCalendarPreviousView
+        class="arrow-btn"
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">
+        ﹤
+      </button>
+      <div class="viewDate">
+        {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+      </div>
+      <button
+        mwlCalendarNextView
+        class="arrow-btn"
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">
+        ﹥
+      </button>
+
+      <!-- <button mwlCalendarToday [(viewDate)]="viewDate">Today</button> -->
+    </div>
+
+    <div class="calendar-view">
+      <mwl-calendar-month-view
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      ></mwl-calendar-month-view>
+    </div>
+
+    <!-- mwl-calendar-week-view / mwl-calendar-day-view -->
+  </div>
+</div>

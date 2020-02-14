@@ -15,6 +15,9 @@ import { AuthInterceptor } from './services/auth-interceptor';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonPopupComponent } from './common-popup/common-popup.component';
+import { ClubScheduleComponent } from './club/club-schedule/club-schedule.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { CommonPopupComponent } from './common-popup/common-popup.component';
     MainComponent,
     SidenavComponent,
     CommonPopupComponent,
+    ClubScheduleComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,7 @@ import { CommonPopupComponent } from './common-popup/common-popup.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   entryComponents: [
     CommonPopupComponent,

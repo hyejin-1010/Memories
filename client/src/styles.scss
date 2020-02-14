@@ -30,6 +30,8 @@ $client-theme: mat-light-theme($client-primary, $client-accent, $client-warn);
 // @import "mixin";
 @import url("//fonts.googleapis.com/earlyaccess/notosanskr.css");
 
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
 * {
   font-family: "Noto Sans KR", sans-serif;
 }

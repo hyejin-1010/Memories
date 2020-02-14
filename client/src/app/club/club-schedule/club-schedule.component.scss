@@ -1,0 +1,19 @@
+@import "mixin";
+
+.schedule-container {
+  .calendar {
+    .calendar-header {
+      text-align: center;
+      font-weight: 600;
+      .arrow-btn {
+        display: inline-block;
+        font-size: 17px;
+        background: transparent;
+        border: 0px solid $black;
+      }
+      .viewDate {
+        display: inline-block;
+      }
+    }
+  }
+}
