@@ -61,9 +61,15 @@ export class ClubScheduleComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
-    console.log('chloe test action event', action, event);
+    this.dialog.open(ScheduleDialogComponent, {
+      width: '450px',
+      minHeight: '450px',
+      height: '450px',
+      panelClass: ['no-padding-dialog'],
+      data: {
+        schedule: event
+      }
+    });
   }
 
   // calendar view 방식 변경

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../services/api.service';
 import { StoreService } from '../services/store.service';
+import { PopupOptions } from '../services/popup.service';
 
 @Component({
   selector: 'app-schedule-dialog',
@@ -9,22 +10,26 @@ import { StoreService } from '../services/store.service';
   styleUrls: ['./schedule-dialog.component.scss']
 })
 export class ScheduleDialogComponent implements OnInit {
-  title: string;
-  start: Date;
-  end: Date;
-
   createMode = false;
   editMode = false;
+
+  schedule: any = {};
 
   constructor(
     public dialogRef: MatDialogRef<ScheduleDialogComponent>,
     private api: ApiService,
     private store: StoreService,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any
   ) { }
 
   ngOnInit() {
-    this.createMode = this.editMode = true;
-    this.initDate();
+    this.schedule = this.dialogData.schedule;
+
+    if (this.schedule && this.schedule._id) {
+    } else {
+      this.createMode = this.editMode = true;
+      this.initDate();
+    }
   }
 
   initDate() {
@@ -34,9 +39,9 @@ export class ScheduleDialogComponent implements OnInit {
       today.setMinutes(minutes - (minutes % 5));
     }
 
-    this.start = JSON.parse(JSON.stringify(today));
-    this.end = today;
-    this.end.setHours(this.end.getHours() + 1);
+    this.schedule.title = JSON.parse(JSON.stringify(today));
+    this.schedule.end =  today;;
+    this.schedule.end.setHours(this.schedule.end.getHours() + 1);
   }
 
   cancel() {
@@ -45,12 +50,16 @@ export class ScheduleDialogComponent implements OnInit {
     });
   }
 
+  edit() {
+    this.editMode = true;
+  }
+
   done() {
     if (this.createMode) {
       this.api.post('schedule', {
-        title: this.title,
-        start: this.start,
-        end: this.end,
+        title: this.schedule.title,
+        start: this.schedule.start,
+        end: this.schedule.end,
         owner: this.store.me._id,
         galleries: [],
         club: this.store.currentClub._id,

@@ -1,10 +1,10 @@
 <div class="dialog-header">
-  일정 생성
+  {{ editMode ? (createMode ? '일정 생성' : '일정 수정') : '일정 상세' }}
 </div>
 
 <div class="dialog-contents">
   <div class="title">
-    <input type="text" [(ngModel)]="title" placeholder="타이틀을 입력해주세요." />
+    <input type="text" [(ngModel)]="schedule.title" [disabled]="!editMode" placeholder="타이틀을 입력해주세요." />
   </div>
 
   <div class="item">
@@ -12,11 +12,13 @@
       <span class="label">시작</span>
     </div>
     <div class="right">
-      <input [(ngModel)]="start"
+      <input [(ngModel)]="schedule.start"
         class="date"
         [owlDateTime]="startDateTime"
         [owlDateTimeTrigger]="startDateTime"
-        placeholder="Start Time">
+        [disabled]="!editMode"
+        placeholder="Start Time"
+        [disabled]="!editMode">
       <owl-date-time #startDateTime [stepMinute]="5"></owl-date-time>
     </div>
   </div>
@@ -26,10 +28,11 @@
       <span class="label">종료</span>
     </div>
     <div class="right">
-      <input [(ngModel)]="end"
+      <input [(ngModel)]="schedule.end"
         class="date"
         [owlDateTime]="endDateTime"
         [owlDateTimeTrigger]="endDateTime"
+        [disabled]="!editMode"
         placeholder="Start Time">
       <owl-date-time #endDateTime [stepMinute]="5"></owl-date-time>
     </div>
@@ -38,7 +41,9 @@
 
 <div class="footer">
   <div class="buttons">
-    <button class="footer-btn cancel" (click)="cancel()" tappable>취소</button>
-    <button class="footer-btn done" (click)="done()" [disabled]="!(title && start && end)">완료</button>
+    <button class="footer-btn cancel" (click)="cancel()">취소</button>
+
+    <button *ngIf="editMode" class="footer-btn done" (click)="done()" [disabled]="!(schedule.title && schedule.start && schedule.end)">완료</button>
+    <button *ngIf="!editMode" class="footer-btn done" (click)="edit()">수정</button>
   </div>
 </div>
