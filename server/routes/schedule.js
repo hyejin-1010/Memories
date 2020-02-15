@@ -36,4 +36,24 @@ module.exports = function (app, Schedule) {
       }
     });
   });
+
+  // 일정 리스트
+  app.get('/api/schedule/:club', function (req, res) {
+    const token = req.headers['x-access-token'];
+    let decoded = jwt.decode(token);
+    if (!decoded || !decoded.uid) {
+      res.status(401).json({ success: false });
+      return;
+    }
+
+    User.findOne({ uid: decoded.uid }, { _id: true }, function(err, user) {
+      if (err || !user) { res.status(500).json({ success: false }); }
+      else {
+        Schedule.find({club: req.params.club}, function(err, schedules) {
+          if (err) { res.status(500).json({ success: false, message: err.errmsg }); }
+          else { res.json({ success: true, data: schedules }); }
+        });
+      }
+    });
+  })
 }

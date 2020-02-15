@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarEvent, CalendarEventAction, CalendarView, CalendarEventTimesChangedEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarView, CalendarEventTimesChangedEvent } from 'angular-calendar';
 import {
-  startOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
   isSameDay,
   isSameMonth,
-  addHours
 } from 'date-fns';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ScheduleDialogComponent } from 'src/app/schedule-dialog/schedule-dialog.component';
+import { ApiService } from 'src/app/services/api.service';
+import { StoreService, ClubModel } from 'src/app/services/store.service';
 
 const primaryColor = {
   primary: '#F78181',
@@ -24,82 +21,43 @@ const primaryColor = {
   styleUrls: ['./club-schedule.component.scss']
 })
 export class ClubScheduleComponent implements OnInit {
+  currentClub: ClubModel;
+
   CalendarView = CalendarView;  // html에서도 CalendarView를 사용할 수 있도록
 
   view: CalendarView = CalendarView.Month;  // calendar view
-  viewDate: Date = new Date();  // active date
-  activeDayIsOpen = false; // active day 일정 view flag
+  viewDate: Date = new Date();              // active date
+  activeDayIsOpen = false;                  // active day 일정 view flag
 
-  // events: CalendarEvent[] = []; // event list
+  events: CalendarEvent[] = [];             // event list
 
   refresh: Subject<any> = new Subject();
 
-  // --- 필요 X
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      }
-    },
-    {
-      label: '<i class="fa fa-fw fa-times"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      }
-    }
-  ];
-
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: primaryColor,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: primaryColor,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: primaryColor,
-      allDay: true
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: primaryColor,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
-  ];
-
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private api: ApiService,
+    private store: StoreService,
   ) { }
 
   ngOnInit() {
+    this.store.currentClub$.subscribe((currentClub) => {
+      if (!currentClub || !currentClub._id) { return; }
+      this.currentClub = currentClub;
+      this.initData();
+    });
+  }
 
+  private initData() {
+    this.api.get(`schedule/${this.currentClub._id}`).subscribe((resp) => {
+      if (!resp.success) { return; }
+      const schedules = resp.data;
+      this.events = schedules.map((schedule) => {
+        schedule.color = primaryColor;
+        schedule.start = new Date(schedule.start);
+        schedule.end = new Date(schedule.end);
+        return schedule;
+      });
+    });
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
