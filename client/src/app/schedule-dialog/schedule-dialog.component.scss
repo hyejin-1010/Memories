@@ -1,10 +1,19 @@
 @import "mixin";
 
 .dialog-header {
+  position: relative;
   height: 70px;
   @include text-height("auto", 70px, 24px, 700);
   text-align: center;
   color: $primary;
+  .right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    @include text-height('auto', 40px, 17px, 700);
+    color: $orangey_red;
+    border: 0px solid $black;
+  }
 }
 
 .dialog-contents {

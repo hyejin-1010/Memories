@@ -71,14 +71,20 @@ export class ClubScheduleComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.type === 'done') {
-        const schedule = result.schedule;
-        const findIndex = this.events.findIndex((evt: any) => evt._id === schedule._id);
-        if (findIndex > -1) {
+      if (!result || !result.schedule) { return; }
+      const schedule = result.schedule;
+      const findIndex = this.events.findIndex((evt: any) => evt._id === schedule._id);
+      if (findIndex === -1) { return; }
+
+      switch (result.type) {
+        case 'done':
           this.events[findIndex] = this.scheduleToEvent(schedule);
-          this.events = [ ... this.events ];
-        }
+          break;
+        case 'delete':
+          this.events.splice(findIndex, 1);
+          break;
       }
+      this.events = [ ... this.events ];
     });
   }
 
@@ -130,12 +136,20 @@ export class ClubScheduleComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.type !== 'done') { return; }
+      if (!result || !result.schedule) { return; }
       const schedule = result.schedule;
-      if (schedule && schedule._id) {
-        this.events.push(this.scheduleToEvent(schedule));
-        this.events = [ ... this.events ];
+      if (!schedule._id) { return; }
+
+      switch (result.type) {
+        case 'done':
+          this.events.push(this.scheduleToEvent(schedule));
+          break;
+        case 'delete':
+          const findIndex = this.events.findIndex((evt: any) => evt._id === schedule._id);
+          if (findIndex > -1) { this.events.splice(findIndex, 1); }
+          break;
       }
+      this.events = [ ... this.events ];
     });
   }
 

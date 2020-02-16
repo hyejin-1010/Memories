@@ -90,6 +90,23 @@ export class ScheduleDialogComponent implements OnInit {
     this.editMode = true;
   }
 
+  delete() {
+    const popupRef = this.popup.open({
+      title: '일정 삭제',
+      contents: '정말 삭제하시겠습니까?',
+      type: 'confirm'
+    });
+
+    popupRef.afterClosed().subscribe((result: CommonPopupResultBody) => {
+      if (result && result.action) {
+        this.api.delete(`schedule/${this.schedule._id}`, {}).subscribe((resp) => {
+          if (!resp.success) { return; }
+          this.close(true);
+        });
+      }
+    });
+  }
+
   done() {
     if (this.createMode) {
       this.api.post('schedule', {
@@ -118,9 +135,9 @@ export class ScheduleDialogComponent implements OnInit {
     }
   }
 
-  close() {
+  close(deleted: boolean = false) {
     this.dialogRef.close({
-      type: 'done',
+      type: deleted ? 'delete' : 'done',
       schedule: this.schedule
     });
   }

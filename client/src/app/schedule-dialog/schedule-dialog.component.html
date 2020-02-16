@@ -1,5 +1,6 @@
 <div class="dialog-header">
   {{ editMode ? (createMode ? '일정 생성' : '일정 수정') : '일정 상세' }}
+  <button *ngIf="!editMode" class="right" (click)="delete()">삭제</button>
 </div>
 
 <div class="dialog-contents">
