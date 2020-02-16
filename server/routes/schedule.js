@@ -91,4 +91,26 @@ module.exports = function (app, Schedule) {
       }
     });
   });
+
+  // 일정 삭제
+  app.delete('/api/schedule/:id', function (req, res) {
+    const token = req.headers['x-access-token'];
+    let decoded = jwt.decode(token);
+    if (!decoded || !decoded.uid) {
+      res.status(401).json({ success: false });
+      return;
+    }
+
+    User.findOne({ uid: decoded.uid }, { _id: true }, function(err, user) {
+      if (err || !user) { res.status(500).json({ success: false }); }
+      else {
+        Schedule.deleteOne({ _id: req.params.id }, function(err, schedule) {
+          if (err) { res.status(500).json({ success: false, message: err.errmsg }); }
+          else {
+            res.status({ success: true });
+          }
+        });
+      }
+    });
+  });
 }
