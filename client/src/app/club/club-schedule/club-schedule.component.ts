@@ -43,25 +43,24 @@ export class ClubScheduleComponent implements OnInit {
     this.store.currentClub$.subscribe((currentClub) => {
       if (!currentClub || !currentClub._id) { return; }
       this.currentClub = currentClub;
-      this.initData();
+      this.getSchedules();
     });
   }
 
-  private initData() {
+  // 일정 list를 받아와 event list를 init하는 함수
+  private getSchedules() {
     this.api.get(`schedule/${this.currentClub._id}`).subscribe((resp) => {
       if (!resp.success) { return; }
       const schedules = resp.data;
       this.events = schedules.map((schedule) => {
-        schedule.color = primaryColor;
-        schedule.start = new Date(schedule.start);
-        schedule.end = new Date(schedule.end);
-        return schedule;
+        return this.scheduleToEvent(schedule);
       });
     });
   }
 
+  // calendar에서 일정 클릭 시
   handleEvent(action: string, event: CalendarEvent): void {
-    this.dialog.open(ScheduleDialogComponent, {
+    const dialogRef =this.dialog.open(ScheduleDialogComponent, {
       width: '450px',
       minHeight: '450px',
       height: '450px',
@@ -70,11 +69,17 @@ export class ClubScheduleComponent implements OnInit {
         schedule: event
       }
     });
-  }
 
-  // calendar view 방식 변경
-  setView(view: CalendarView) {
-    this.view = view;
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.type === 'done') {
+        const schedule = result.schedule;
+        const findIndex = this.events.findIndex((evt: any) => evt._id === schedule._id);
+        if (findIndex > -1) {
+          this.events[findIndex] = this.scheduleToEvent(schedule);
+          this.events = [ ... this.events ];
+        }
+      }
+    });
   }
 
   // active day의 schedule view close
@@ -122,5 +127,13 @@ export class ClubScheduleComponent implements OnInit {
       height: '450px',
       panelClass: ['no-padding-dialog'],
     });
+  }
+
+  // schedule을 event 형식에 맞춰서 변경해주는 func
+  private scheduleToEvent(schedule: any) {
+    schedule.color = primaryColor;
+    schedule.start = new Date(schedule.start);
+    schedule.end = new Date(schedule.end);
+    return schedule;
   }
 }
