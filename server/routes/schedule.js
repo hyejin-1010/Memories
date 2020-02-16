@@ -104,10 +104,10 @@ module.exports = function (app, Schedule) {
     User.findOne({ uid: decoded.uid }, { _id: true }, function(err, user) {
       if (err || !user) { res.status(500).json({ success: false }); }
       else {
-        Schedule.deleteOne({ _id: req.params.id }, function(err, schedule) {
+        Schedule.deleteOne({ _id: req.params.id }, function(err) {
           if (err) { res.status(500).json({ success: false, message: err.errmsg }); }
           else {
-            res.status({ success: true });
+            res.json({ success: true });
           }
         });
       }
