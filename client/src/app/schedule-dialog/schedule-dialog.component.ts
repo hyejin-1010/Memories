@@ -51,8 +51,8 @@ export class ScheduleDialogComponent implements OnInit {
       today.setMinutes(minutes - (minutes % 5));
     }
 
-    this.schedule.title = JSON.parse(JSON.stringify(today));
-    this.schedule.end =  today;;
+    this.schedule.start = JSON.parse(JSON.stringify(today));
+    this.schedule.end =  today;
     this.schedule.end.setHours(this.schedule.end.getHours() + 1);
   }
 
@@ -101,7 +101,10 @@ export class ScheduleDialogComponent implements OnInit {
         club: this.store.currentClub._id,
         allDay: false,
       }).subscribe((resp) => {
-        console.log('chloe test schedule create resp', resp);
+        if (!resp.success) { return; }
+        this.schedule = resp.data;
+        this.editMode = false;
+        this.scheduleOrg = JSON.parse(JSON.stringify(this.schedule));
       });
     } else if (this.editMode) {
       this.api.put(`schedule/${this.schedule._id}`, {

@@ -120,12 +120,22 @@ export class ClubScheduleComponent implements OnInit {
     this.handleEvent('Dropped or resized', event);
   }
 
+  // 일정 추가
   addSchedule() {
-    this.dialog.open(ScheduleDialogComponent, {
+    const dialogRef = this.dialog.open(ScheduleDialogComponent, {
       width: '450px',
       minHeight: '450px',
       height: '450px',
       panelClass: ['no-padding-dialog'],
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.type !== 'done') { return; }
+      const schedule = result.schedule;
+      if (schedule && schedule._id) {
+        this.events.push(this.scheduleToEvent(schedule));
+        this.events = [ ... this.events ];
+      }
     });
   }
 
