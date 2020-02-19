@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+// var multer = require('multer');
+// var fs = require('fs');
 
 // [CONFIGURE mongoose]
 
@@ -19,6 +21,7 @@ mongoose.connect('mongodb://localhost/memories'); // mongodb_tutorial : Database
 var User = require('./models/user');
 var Club = require('./models/club');
 var Schedule = require('./models/schedule');
+var Image = require('./models/image');
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");
@@ -39,6 +42,17 @@ var port = process.env.PORT || 8080;
 var router = require('./routes')(app, User);
 var clubRouter = require('./routes/club')(app, Club);
 var scheduleRouter = require('./routes/schedule')(app, Schedule);
+
+// 업로드할 이미지의 경로 정의
+/*
+app.use(multer({ dest: './uploads/',
+  rename: function (fieldname, filename) {
+    return filename;
+  },
+}));
+*/
+
+var galleryRouter = require('./routes/gallery')(app, Image);
 
 // [RUN SERVER]
 var server = app.listen(port, function() {
