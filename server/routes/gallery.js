@@ -1,19 +1,27 @@
 let jwt = require("jsonwebtoken");
 let secretObj = require("../config/jwt");
-const  multipart  =  require('connect-multiparty');
-const  multipartMiddleware  =  multipart({ uploadDir:  './uploads' });
+var multer = require('multer')
 
 module.exports = function(app, Image) {
   // 이미지 업로드
-  app.post('/api/photo’', multipartMiddleware, function (req, res) {
-    /*
-    var image = new Image();
-    image.data = fs.readFileSync(req.files.userPhoto.path);
-    image.contentType = 'image/png';
-    image.save();
-    */
-   res.json({
-     message: 'success image upload',
-   });
+  var storage = multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, './uploads');
+    },
+    filename(req, file, cb) {
+      cb(null, file.originalname);
+    }
+  });
+
+  app.post('/api/photo', function (req, res) {
+    var upload = multer({ storage }).single('userFile');
+    upload(req, res, function(err) {
+      if (err) {
+        return res.end("Error uploading file");
+      }
+      res.json({
+        success: true
+      });
+    });
   });
 }
