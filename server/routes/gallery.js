@@ -37,9 +37,10 @@ module.exports = function(app, Image) {
       image.originalName = file.name;
       image.contentType = file.type;
       image.created = new Date().toString();
+      image.club = fields.club;
     });
 
-    upload(req, res, function(err, data) {
+    upload(req, res, function(err) {
       if (err) {
         return res.end("Error uploading file");
       }
