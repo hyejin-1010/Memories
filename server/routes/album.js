@@ -34,4 +34,30 @@ module.exports = function (app, Album) {
       }
     });
   });
+
+  // 앨범 리스트
+  app.get('/api/album', function (req, res) {
+    const token = req.headers['x-access-token'];
+    let decoded = jwt.decode(token);
+    if (!decoded || !decoded.uid) {
+      res.status(401).json({ success: false, message: 'not user' });
+      return;
+    }
+
+    User.findOne({ uid: decoded.uid }, { _id: true }, function (err, user) {
+      if (err) { res.status(500).json({ success: false }); }
+      else if (!user) { res.status(401).json({ success: false }); }
+      else {
+        Album.find({ club: req.query.club }, function (err, albums) {
+          if (err) { res.status(500).json(); }
+          else {
+            res.json({
+              success: true,
+              data: albums
+            });
+          }
+        });
+      }
+    });
+  });
 }
