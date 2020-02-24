@@ -21,6 +21,7 @@ var User = require('./models/user');
 var Club = require('./models/club');
 var Schedule = require('./models/schedule');
 var Image = require('./models/image');
+var Album = require('./models/album');
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");
@@ -44,6 +45,7 @@ var clubRouter = require('./routes/club')(app, Club);
 var scheduleRouter = require('./routes/schedule')(app, Schedule);
 
 var galleryRouter = require('./routes/gallery')(app, Image);
+var albumRouter = require('./routes/album')(app, Album);
 
 // [RUN SERVER]
 var server = app.listen(port, function() {
