@@ -20,14 +20,27 @@
   overflow-y: auto;
 
   .club-item {
-    height: 50px;
-    padding: 0 5px;
-    @include text-height("auto", 50px, 13px, 500);
-    border-bottom: 1px solid $primary;
+    div {
+      position: relative;
+      height: 50px;
+      padding: 0 5px;
+      @include text-height("auto", 50px, 13px, 500);
+      border-bottom: 1px solid $primary;
 
-    &.active {
-      color: $white;
-      background: $primary;
+      &:not(.item) {
+        margin-left: 10px;
+      }
+
+      .right {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      &.active {
+        color: $white;
+        background: $primary;
+      }
     }
   }
 }

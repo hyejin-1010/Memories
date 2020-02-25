@@ -7,6 +7,7 @@ export interface ClubModel {
   members: any[];
   created: string;
   owner: string;
+  expanded: boolean;
 }
 
 @Injectable({

@@ -1,11 +1,24 @@
 <div class="sidenav">
   <div class="nav-list">
     <div *ngFor="let club of clubs"
-      routerLink="{{club._id}}/schedule"
-      [ngClass]="{'active': club._id === store.currentClub?._id}"
-      (click)="clickClub(club)"
+      (click)="club.expanded = !club.expanded"
       class="club-item">
-      {{club.title}}
+      <div class="item">
+        {{club.title}}
+        <div class="right">{{club.expanded ? '˅' : '˄'}}</div>
+      </div>
+      <ng-container *ngIf="club.expanded">
+        <div class="club-schedule"
+          routerLink="{{club._id}}/schedule"
+          [routerLinkActive]="'active'">
+          일정
+        </div>
+        <div class="club-gallery"
+          routerLink="{{club._id}}/gallery"
+          [routerLinkActive]="'active'">
+          갤러리
+        </div>
+      </ng-container>
     </div>
   </div>
   <div class="add-team" (click)="addClub()">
