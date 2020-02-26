@@ -21,14 +21,16 @@
 
   .club-item {
     div {
-      position: relative;
-      height: 50px;
       padding: 0 5px;
-      @include text-height("auto", 50px, 13px, 500);
       border-bottom: 1px solid $primary;
-
-      &:not(.item) {
-        margin-left: 10px;
+      &.item {
+        position: relative;
+        height: 50px;
+        @include text-height("auto", 50px, 15px, 500);
+      }
+      &.club-schedule, &.club-gallery {
+        height: 30px;
+        @include text-height("auto", 30px, 13px, 500);
       }
 
       .right {

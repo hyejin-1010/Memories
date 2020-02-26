@@ -1,10 +1,9 @@
 <div class="sidenav">
   <div class="nav-list">
     <div *ngFor="let club of clubs"
-      (click)="club.expanded = !club.expanded"
       class="club-item">
       <div class="item">
-        {{club.title}}
+        <div class="title" (click)="club.expanded = !club.expanded">{{club.title}}</div>
         <div class="right">{{club.expanded ? '˅' : '˄'}}</div>
       </div>
       <ng-container *ngIf="club.expanded">
