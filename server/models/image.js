@@ -7,6 +7,7 @@ var imageSchema = new Schema({
   contentType: { type: String, required: true },
   club: { type: String, required: true },
   album: { type: String },
+  creator: { type: String, required: true },
   created: { type: String, required: true }
 });
 // data: { type: Buffer, required: true },
