@@ -93,13 +93,6 @@ module.exports = function(app, Image) {
   });
 
   app.get('/api/file/:id', function (req, res) {
-    const token = req.headers['x-access-token'];
-    let decoded = jwt.decode(token);
-    if (!decoded || !decoded.uid) {
-      res.status(401).json({ success: false, message: 'not user' });
-      return;
-    }
-
     Image.findOne({ _id: req.params.id }, function (err, image) {
       if (err) { res.status(500).json(); }
       else if (!image) { res.json({ success: false, id: req.params.id }); }
