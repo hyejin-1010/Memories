@@ -1,0 +1,26 @@
+<div class="container">
+  <!--
+  <div class="create_btn">
+    <button (click)="createAlbum()">앨범 생성</button>
+  </div>
+  -->
+
+  <div class="tabs">
+    <div class="tab">전체 사진</div>
+    <div class="tab">날짜</div>
+    <div class="tab">앨범</div>
+  </div>
+
+  <div class="images">
+    <div *ngFor="let image of images" class="image">
+      <img [src]="image.url" />
+    </div>
+  </div>
+
+  <div class="upload_file">
+    <input type="file" (change)="fileChange($event)" />
+  </div>
+  <div class="upload_button">
+    <button (click)="upload()">Upload</button>
+  </div>
+</div>

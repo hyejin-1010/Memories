@@ -5,7 +5,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { AppComponent } from './app.component';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -21,6 +20,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { ScheduleDialogComponent } from './schedule-dialog/schedule-dialog.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { ClubGalleryComponent } from './club/club-gallery/club-gallery.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +33,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     CommonPopupComponent,
     ClubScheduleComponent,
     ScheduleDialogComponent,
+    ClubGalleryComponent,
   ],
   imports: [
     BrowserModule,
