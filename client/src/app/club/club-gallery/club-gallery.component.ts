@@ -22,11 +22,14 @@ export class ClubGalleryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.api.get('gallery', { club: this.store.currentClub._id }).subscribe((resp) => {
-      const images = resp.data;
-      this.images = images.map((image) => {
-        image.url = `${this.api.HOST}/${this.api.PREFIX}/file/${image._id}`;
-        return image;
+    this.store.currentClub$.subscribe((currentClub) => {
+      this.images = [];
+      this.api.get('gallery', { club: currentClub._id }).subscribe((resp) => {
+        const images = resp.data;
+        this.images = images.map((image) => {
+          image.url = `${this.api.HOST}/${this.api.PREFIX}/file/${image._id}`;
+          return image;
+        });
       });
     });
   }

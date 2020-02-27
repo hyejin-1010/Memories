@@ -26,7 +26,9 @@ export class MainComponent implements OnInit, OnDestroy {
         // this.aside.close();
       } else if (event instanceof NavigationEnd) {
         this.routeParams = this.route.snapshot.params;
-        this.club = this.store.currentClub;
+        const currentClub = this.store.clubs.find((club) => club._id === this.routeParams.id);
+        this.store.currentClub = currentClub;
+        this.club = currentClub;
       }
     });
   }
