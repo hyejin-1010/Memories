@@ -3,6 +3,7 @@ let secretObj = require("../config/jwt");
 var multer = require('multer');
 var formidable = require('formidable');
 var uuid = require('uuid-random');
+var fs = require('fs');
 let User = require('../models/user');
 
 module.exports = function(app, Image) {
@@ -90,4 +91,31 @@ module.exports = function(app, Image) {
       });
     });
   });
+
+  app.get('/api/file/:id', function (req, res) {
+    const token = req.headers['x-access-token'];
+    let decoded = jwt.decode(token);
+    if (!decoded || !decoded.uid) {
+      res.status(401).json({ success: false, message: 'not user' });
+      return;
+    }
+
+    Image.findOne({ _id: req.params.id }, function (err, image) {
+      if (err) { res.status(500).json(); }
+      else if (!image) { res.json({ success: false, id: req.params.id }); }
+      else {
+        fs.readFile(`./uploads/${image.saveName}`,              //파일 읽기
+          function (err, data)
+          {
+              //http의 헤더정보를 클라이언트쪽으로 출력
+              //image/jpg : jpg 이미지 파일을 전송한다
+              //write 로 보낼 내용을 입력
+              res.writeHead(200, { "Context-Type": image.contentType });//보낼 헤더를 만듬
+              res.write(data);   //본문을 만들고
+              res.end();  //클라이언트에게 응답을 전송한다
+          }
+      );
+      }
+    });
+  })
 }
