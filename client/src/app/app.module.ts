@@ -21,6 +21,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { ScheduleDialogComponent } from './schedule-dialog/schedule-dialog.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ClubGalleryComponent } from './club/club-gallery/club-gallery.component';
+import { ImageUploadComponent } from './image-upload/image-upload.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ClubGalleryComponent } from './club/club-gallery/club-gallery.component
     ClubScheduleComponent,
     ScheduleDialogComponent,
     ClubGalleryComponent,
+    ImageUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ import { ClubGalleryComponent } from './club/club-gallery/club-gallery.component
   entryComponents: [
     CommonPopupComponent,
     ScheduleDialogComponent,
+    ImageUploadComponent,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

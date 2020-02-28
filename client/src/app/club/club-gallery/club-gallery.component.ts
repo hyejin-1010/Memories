@@ -3,6 +3,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { StoreService } from 'src/app/services/store.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { CommonPopupResultBody } from 'src/app/common-popup/common-popup.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageUploadComponent } from 'src/app/image-upload/image-upload.component';
 
 type Tab = 'all' | 'date' | 'album';
 
@@ -27,6 +29,7 @@ export class ClubGalleryComponent implements OnInit {
     private api: ApiService,
     private store: StoreService,
     private popup: PopupService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -51,17 +54,6 @@ export class ClubGalleryComponent implements OnInit {
     this.uploadedFiles = element.target.files;
   }
 
-  upload() {
-    const formData = new FormData();
-
-    formData.set('userFile', this.uploadedFiles[0]);
-    formData.set('club', this.store.currentClub._id);
-
-    this.api.post('photo', formData).subscribe((resp) => {
-      console.log('chloe test post photo response', resp);
-    });
-  }
-
   createAlbum() {
     this.popup.open({
       title: '앨범 생성',
@@ -78,6 +70,24 @@ export class ClubGalleryComponent implements OnInit {
         club: this.store.currentClub._id
       }).subscribe((resp) => {
         console.log('chloe test resp', resp);
+      });
+    });
+  }
+
+  addImage() {
+    const dialogRef = this.dialog.open(ImageUploadComponent, {
+      width: '450px',
+      minHeight: '600px',
+      height: '600px',
+      panelClass: ['no-padding-dialog'],
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result.formData) { return; }
+      const formData = result.formData;
+      formData.set('club', this.store.currentClub._id);
+      this.api.post('photo', formData).subscribe((resp) => {
+        console.log('chloe test post photo response', resp);
       });
     });
   }

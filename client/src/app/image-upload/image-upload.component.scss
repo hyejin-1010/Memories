@@ -1,0 +1,21 @@
+@import "mixin";
+
+.dialog-contents {
+  height: calc(100% - 50px);
+  .image {
+    width: 400px;
+    height: 400px;
+    #previewImg {
+      width: auto;
+      height: auto;
+      max-width: 400px;
+      max-height: 400px;
+    }
+  }
+}
+
+.footer {
+  height: 50px;
+  .upload_button {
+  }
+}
