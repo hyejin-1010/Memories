@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { fil } from 'date-fns/locale';
 import { StoreService } from 'src/app/services/store.service';
 import { PopupService } from 'src/app/services/popup.service';
 import { CommonPopupResultBody } from 'src/app/common-popup/common-popup.component';
+
+type Tab = 'all' | 'date' | 'album';
 
 @Component({
   selector: 'app-club-gallery',
@@ -14,6 +15,13 @@ export class ClubGalleryComponent implements OnInit {
   uploadedFiles: any[];
   albums: any[];
   images: any[] = [];
+
+  tabs: { value: Tab, title: string }[] = [
+    { value: 'all', title: '전체 사진' },
+    { value: 'date', title: '날짜' },
+    { value: 'album', title: '앨범' }
+  ];
+  currentTab: Tab = 'all';
 
   constructor(
     private api: ApiService,
@@ -32,6 +40,11 @@ export class ClubGalleryComponent implements OnInit {
         });
       });
     });
+  }
+
+  clickTab(tab: Tab) {
+    if (this.currentTab === tab) { return; }
+    this.currentTab = tab;
   }
 
   fileChange(element) {
