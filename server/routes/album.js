@@ -1,6 +1,7 @@
 let jwt = require("jsonwebtoken");
 let secretObj = require("../config/jwt");
 let User = require('../models/user');
+let Image = require('../models/image');
 
 module.exports = function (app, Album) {
   // 앨범 생성
@@ -55,6 +56,29 @@ module.exports = function (app, Album) {
               success: true,
               data: albums
             });
+          }
+        });
+      }
+    });
+  });
+
+  // 앨범 내 이미지 리스트
+  app.get('/api/album/:id', function (req, res) {
+    const token = req.headers['x-access-token'];
+    let decoded = jwt.decode(token);
+    if (!decoded || !decoded.uid) {
+      res.status(401).json({ success: false, message: 'not user' });
+      return;
+    }
+
+    User.findOne({ uid: decoded.uid }, { _id: true }, function (err, user) {
+      if (err) { res.status(500).json({ success: false }); }
+      else if (!user) { res.status(401).json({ success: false }); }
+      else {
+        Image.find({ _id: req.params.id }, function (err, images) {
+          if (err) { res.status(500).json(); }
+          else {
+            res.json({ success: true, data: images });
           }
         });
       }
