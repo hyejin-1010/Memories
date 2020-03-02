@@ -23,6 +23,8 @@ $image_size: 100px;
 
   div.images {
     div.image {
+      display: inline-block;
+      margin: 5px;
       width: $image_size;
       height: $image_size;
       img {

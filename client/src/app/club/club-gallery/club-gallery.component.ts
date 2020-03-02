@@ -93,7 +93,9 @@ export class ClubGalleryComponent implements OnInit {
       const formData = result.formData;
       formData.set('club', this.store.currentClub._id);
       this.api.post('photo', formData).subscribe((resp) => {
-        console.log('chloe test post photo response', resp);
+        if (!resp.success) { return; }
+        resp.data.url = `${this.api.HOST}/${this.api.PREFIX}/file/${resp.data._id}`;
+        this.images.push(resp.data);
       });
     });
   }
