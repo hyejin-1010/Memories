@@ -1,10 +1,4 @@
 <div class="container">
-  <!--
-  <div class="create_btn">
-    <button (click)="createAlbum()">앨범 생성</button>
-  </div>
-  -->
-
   <div class="tabs">
     <div *ngFor="let tab of tabs"
       class="tab"
@@ -14,11 +8,32 @@
     </div>
   </div>
 
-  <div class="images">
-    <div *ngFor="let image of images" class="image">
-      <img [src]="image.url" />
-    </div>
-  </div>
+  <ng-container [ngSwitch]="currentTab">
+    <ng-container *ngSwitchCase="'all'">
+      <div class="images">
+        <div *ngFor="let image of images" class="image">
+          <img [src]="image.url" />
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'date'">
+      <div class="images">
+        <div *ngFor="let image of images" class="image">
+          <img [src]="image.url" />
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'album'">
+      <div class="albums">
+        <div *ngFor="let album of albums" class="album">
+          {{ album.title }}
+        </div>
+        <div class="album" (click)="createAlbum()">
+          추가
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
 </div>
 
 <div class="footer">

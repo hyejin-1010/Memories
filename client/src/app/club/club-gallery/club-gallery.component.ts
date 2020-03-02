@@ -15,7 +15,7 @@ type Tab = 'all' | 'date' | 'album';
 })
 export class ClubGalleryComponent implements OnInit {
   uploadedFiles: any[];
-  albums: any[];
+  albums: any[] = [];
   images: any[] = [];
 
   tabs: { value: Tab, title: string }[] = [
@@ -41,6 +41,11 @@ export class ClubGalleryComponent implements OnInit {
           image.url = `${this.api.HOST}/${this.api.PREFIX}/file/${image._id}`;
           return image;
         });
+      });
+
+      this.api.get('album', { club: currentClub._id }).subscribe((resp) => {
+        if (!resp.success) { return; }
+        this.albums = resp.data || [];
       });
     });
   }
@@ -69,7 +74,8 @@ export class ClubGalleryComponent implements OnInit {
         title,
         club: this.store.currentClub._id
       }).subscribe((resp) => {
-        console.log('chloe test resp', resp);
+        if (!resp.success) { return; }
+        this.albums.push(resp.data);
       });
     });
   }
