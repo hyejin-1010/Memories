@@ -52,10 +52,18 @@ module.exports = function (app, Album) {
         Album.find({ club: req.query.club }, function (err, albums) {
           if (err) { res.status(500).json(); }
           else {
-            res.json({
-              success: true,
-              data: albums
-            });
+            albums = JSON.parse(JSON.stringify(albums));
+            for (let index = 0; index < albums.length; index++) {
+              Image.findOne({ album: albums[index]._id }, function (err, image) {
+                if (!err && image) { albums[index].image = image; }
+                if (index === (albums.length - 1)) {
+                  res.json({
+                    success: true,
+                    data: albums
+                  });
+                }
+              });
+            }
           }
         });
       }
