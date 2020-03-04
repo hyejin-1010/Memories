@@ -47,6 +47,7 @@ module.exports = function(app, Image) {
           image.contentType = file.type;
           image.created = new Date().toString();
           image.club = fields.club;
+          if (fields.album) { image.album = fields.album; }
           image.creator = user._id;
         });
 
