@@ -5,6 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -44,6 +45,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatSelectModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     OwlDateTimeModule,
     OwlNativeDateTimeModule,

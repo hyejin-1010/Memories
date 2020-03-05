@@ -4,6 +4,15 @@
   </div>
 
   <input type="file" (change)="fileChange($event)" />
+
+  <mat-form-field>
+    앨범 선택
+    <mat-select [(ngModel)]="album">
+      <mat-option *ngFor="let album of albums" [value]="album._id">
+        {{ album.title }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <div class="footer">

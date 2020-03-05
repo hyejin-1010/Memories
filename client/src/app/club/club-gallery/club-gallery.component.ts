@@ -86,12 +86,16 @@ export class ClubGalleryComponent implements OnInit {
       minHeight: '600px',
       height: '600px',
       panelClass: ['no-padding-dialog'],
+      data: {
+        albums: this.albums.map((album) => ({ _id: album._id, title: album.title }))
+      }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (!result.formData) { return; }
+      if (!result || !result.formData) { return; }
       const formData = result.formData;
       formData.set('club', this.store.currentClub._id);
+      if (result.album) { formData.set('album', result.album); }
       this.api.post('photo', formData).subscribe((resp) => {
         if (!resp.success) { return; }
         resp.data.url = `${this.api.HOST}/${this.api.PREFIX}/file/${resp.data._id}`;

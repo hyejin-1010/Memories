@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { StoreService } from '../services/store.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-image-upload',
@@ -9,13 +8,16 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ImageUploadComponent implements OnInit {
   uploadFile: File;
+  albums: { _id: string, title: string }[] = [];
+  album: string;
 
   constructor(
-    private store: StoreService,
     public dialogRef: MatDialogRef<ImageUploadComponent>,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any
   ) { }
 
   ngOnInit() {
+    this.albums = this.dialogData.albums;
   }
 
   fileChange(event) {
@@ -30,11 +32,11 @@ export class ImageUploadComponent implements OnInit {
 
   upload() {
     if (!this.uploadFile) { return; }
-
     const formData = new FormData();
     formData.set('userFile', this.uploadFile);
     this.dialogRef.close({
-      formData
+      formData,
+      album: this.album
     });
   }
 }
