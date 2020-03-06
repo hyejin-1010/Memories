@@ -36,14 +36,26 @@ $image_size: 100px;
 
   div.albums {
     div.album {
+      position: relative;
       display: inline-block;
       margin: 5px;
       width: $image_size;
       height: $image_size;
-      font-weight: bold;
-      line-height: $image_size;
-      text-align: center;
       border: 1px solid $primary;
+      img.image, div.background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: $image_size;
+        height: $image_size;
+      }
+      div.background {
+        background: rgba(0, 0, 0, .5);
+        color: $primary;
+        font-weight: bold;
+        line-height: $image_size;
+        text-align: center;
+      }
     }
   }
 }

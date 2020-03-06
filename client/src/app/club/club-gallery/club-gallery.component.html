@@ -26,10 +26,13 @@
     <ng-container *ngSwitchCase="'album'">
       <div class="albums">
         <div *ngFor="let album of albums" class="album">
-          {{ album.title }}
+          <img *ngIf="album.imageUrl" [src]="album.imageUrl" class="image" />
+          <div class="background">
+            {{ album.title }}
+          </div>
         </div>
         <div class="album" (click)="createAlbum()">
-          추가
+          <div class="background">추가</div>
         </div>
       </div>
     </ng-container>

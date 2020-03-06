@@ -38,7 +38,7 @@ export class ClubGalleryComponent implements OnInit {
       this.api.get('gallery', { club: currentClub._id }).subscribe((resp) => {
         const images = resp.data;
         this.images = images.map((image) => {
-          image.url = `${this.api.HOST}/${this.api.PREFIX}/file/${image._id}`;
+          image.url = this.imageUrl(image._id);
           return image;
         });
       });
@@ -46,8 +46,16 @@ export class ClubGalleryComponent implements OnInit {
       this.api.get('album', { club: currentClub._id }).subscribe((resp) => {
         if (!resp.success) { return; }
         this.albums = resp.data || [];
+        this.albums = this.albums.map((album) => {
+          if (album.image) { album.imageUrl = this.imageUrl(album.image._id); }
+          return album;
+        });
       });
     });
+  }
+
+  private imageUrl(id: string): string {
+    return `${this.api.HOST}/${this.api.PREFIX}/file/${id}`;
   }
 
   clickTab(tab: Tab) {
