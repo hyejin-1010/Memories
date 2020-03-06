@@ -83,7 +83,7 @@ module.exports = function (app, Album) {
       if (err) { res.status(500).json({ success: false }); }
       else if (!user) { res.status(401).json({ success: false }); }
       else {
-        Image.find({ _id: req.params.id }, function (err, images) {
+        Image.find({ album: req.params.id }, function (err, images) {
           if (err) { res.status(500).json(); }
           else {
             res.json({ success: true, data: images });
