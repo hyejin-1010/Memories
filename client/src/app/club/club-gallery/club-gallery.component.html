@@ -24,8 +24,8 @@
       </div>
     </ng-container>
     <ng-container *ngSwitchCase="'album'">
-      <div class="albums">
-        <div *ngFor="let album of albums" class="album">
+      <div *ngIf="!viewAlbum" class="albums">
+        <div *ngFor="let album of albums" class="album" (click)="clickAlbum(album._id)">
           <img *ngIf="album.imageUrl" [src]="album.imageUrl" class="image" />
           <div class="background">
             {{ album.title }}
@@ -33,6 +33,17 @@
         </div>
         <div class="album" (click)="createAlbum()">
           <div class="background">추가</div>
+        </div>
+      </div>
+
+      <div *ngIf="viewAlbum">
+        <div class="back">
+          <button (click)="back()">←</button>
+        </div>
+        <div class="images">
+          <div *ngFor="let image of albumImages" class="image">
+            <img [src]="image.url" />
+          </div>
         </div>
       </div>
     </ng-container>

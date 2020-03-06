@@ -17,6 +17,8 @@ export class ClubGalleryComponent implements OnInit {
   uploadedFiles: any[];
   albums: any[] = [];
   images: any[] = [];
+  albumImages: any[] = [];
+  viewAlbum = false;
 
   tabs: { value: Tab, title: string }[] = [
     { value: 'all', title: '전체 사진' },
@@ -56,6 +58,21 @@ export class ClubGalleryComponent implements OnInit {
 
   private imageUrl(id: string): string {
     return `${this.api.HOST}/${this.api.PREFIX}/file/${id}`;
+  }
+
+  clickAlbum(id: string): void {
+    this.api.get(`album/${id}`).subscribe((resp) => {
+      const albumImages = resp.data;
+      this.albumImages = albumImages.map((image) => {
+        image.url = this.imageUrl(image._id);
+        return image;
+      });
+      this.viewAlbum = true;
+    });
+  }
+
+  back(): void {
+    this.viewAlbum = false;
   }
 
   clickTab(tab: Tab) {
