@@ -10,11 +10,7 @@
 
   <ng-container [ngSwitch]="currentTab">
     <ng-container *ngSwitchCase="'all'">
-      <div class="images">
-        <div *ngFor="let image of images" class="image">
-          <img [src]="image.url" />
-        </div>
-      </div>
+      <ng-container *ngTemplateOutlet="imageView;context:{images: images}"></ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="'date'">
       <div class="images">
@@ -40,11 +36,7 @@
         <div class="back">
           <button (click)="back()">←</button>
         </div>
-        <div class="images">
-          <div *ngFor="let image of albumImages" class="image">
-            <img [src]="image.url" />
-          </div>
-        </div>
+        <ng-container *ngTemplateOutlet="imageView;context:{images: albumImages}"></ng-container>
       </div>
     </ng-container>
   </ng-container>
@@ -53,3 +45,14 @@
 <div class="footer">
   <button class="footer-btn" (click)="addImage()">추가</button>
 </div>
+
+<ng-template #imageView let-images="images">
+  <div *ngIf="images?.length > 0" class="images">
+    <div *ngFor="let image of images" class="image">
+      <img [src]="image.url" />
+    </div>
+  </div>
+  <div *ngIf="!images?.length" class="none">
+    이미지가 없습니다.
+  </div>
+</ng-template>
