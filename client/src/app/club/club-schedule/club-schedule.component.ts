@@ -60,7 +60,7 @@ export class ClubScheduleComponent implements OnInit {
 
   // calendar에서 일정 클릭 시
   handleEvent(action: string, event: CalendarEvent): void {
-    const dialogRef =this.dialog.open(ScheduleDialogComponent, {
+    const dialogRef = this.dialog.open(ScheduleDialogComponent, {
       width: '450px',
       minHeight: '450px',
       height: '450px',
