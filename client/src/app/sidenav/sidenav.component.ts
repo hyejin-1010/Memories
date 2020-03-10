@@ -3,6 +3,7 @@ import { PopupService } from '../services/popup.service';
 import { CommonPopupResultBody } from '../common-popup/common-popup.component';
 import { ClubService } from '../services/club.service';
 import { StoreService, ClubModel } from '../services/store.service';
+import { skip, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidenav',
@@ -21,6 +22,12 @@ export class SidenavComponent implements OnInit {
   ngOnInit() {
     this.store.clubs$.subscribe(clubs => {
       this.clubs = clubs;
+    });
+
+    this.store.currentClub$.pipe(take(2), skip(1)).subscribe((currentClub) => {
+      if (!currentClub || !currentClub._id) { return; }
+      const club = this.clubs.find(c => c._id === currentClub._id);
+      if (club) { club.expanded = true; }
     });
   }
 

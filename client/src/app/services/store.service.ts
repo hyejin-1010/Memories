@@ -29,6 +29,7 @@ export class StoreService {
     return this._currentClub;
   }
   set currentClub(club: ClubModel) {
+    if (this._currentClub && club && this._currentClub._id === club._id) { return; }
     this._currentClub = club;
     this.currentClub$.next(this._currentClub);
   }

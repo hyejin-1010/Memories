@@ -19,8 +19,6 @@ export class ClubService {
         if (resp.success) {
           this.store.clubs = resp.data;
           this.store.clubs$.next(this.store.clubs);
-          const club: ClubModel = this.store.clubs[0];
-          if (club && club._id) { this.store.currentClub = club; }
         }
         return resp.success;
       })
