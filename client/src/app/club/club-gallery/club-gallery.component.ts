@@ -5,6 +5,7 @@ import { PopupService } from 'src/app/services/popup.service';
 import { CommonPopupResultBody } from 'src/app/common-popup/common-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageUploadComponent } from 'src/app/image-upload/image-upload.component';
+import { ImageViewerDialogComponent } from 'src/app/image-viewer-dialog/image-viewer-dialog.component';
 
 type Tab = 'all' | 'date' | 'album';
 
@@ -126,6 +127,16 @@ export class ClubGalleryComponent implements OnInit {
         resp.data.url = `${this.api.HOST}/${this.api.PREFIX}/file/${resp.data._id}`;
         this.images.push(resp.data);
       });
+    });
+  }
+
+  viewImage(image: any) {
+    this.dialog.open(ImageViewerDialogComponent, {
+      width: '450px',
+      minHeight: '600px',
+      height: '600px',
+      panelClass: ['no-padding-dialog'],
+      data: { image }
     });
   }
 }

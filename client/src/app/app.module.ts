@@ -23,6 +23,7 @@ import { ScheduleDialogComponent } from './schedule-dialog/schedule-dialog.compo
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ClubGalleryComponent } from './club/club-gallery/club-gallery.component';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { ImageViewerDialogComponent } from './image-viewer-dialog/image-viewer-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
     ScheduleDialogComponent,
     ClubGalleryComponent,
     ImageUploadComponent,
+    ImageViewerDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
     CommonPopupComponent,
     ScheduleDialogComponent,
     ImageUploadComponent,
+    ImageViewerDialogComponent,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

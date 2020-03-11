@@ -1,0 +1,10 @@
+<div class="dialog-header">
+  <button class="left" (click)="close()">취소</button>
+  {{image?.originalName || '이미지 뷰어'}}
+</div>
+
+<div class="dialog-contents">
+  <div class="image">
+    <img [src]="image?.url || ''" />
+  </div>
+</div>
